@@ -8,12 +8,14 @@ on:
   #   secrets:
   #     jira_auth_token:
   #       required: true
+    push:
   workflow_dispatch:
     inputs:
       jira_version_prefix:
         description: "jira 버전 prefix"
         type: string
         required: true
+        default: test
 jobs:
   build:
     runs-on: ubuntu-latest
