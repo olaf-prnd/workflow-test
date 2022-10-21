@@ -8,7 +8,7 @@ on:
   #   secrets:
   #     jira_auth_token:
   #       required: true
-    push:
+  push:
   workflow_dispatch:
     inputs:
       jira_version_prefix:
