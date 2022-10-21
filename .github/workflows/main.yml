@@ -30,3 +30,4 @@ jobs:
           project: HDA
           version: ${{ inputs.jira_version_prefix }} ${{ steps.extract_version_name.outputs.version }}
           auth-token: ${{ secrets.jira_auth_token }}
+
