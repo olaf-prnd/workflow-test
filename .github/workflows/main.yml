@@ -1,15 +1,13 @@
 name: Jira Release
 on:
-  # workflow_call:
-  #   inputs:
-  #     jira_version_prefix:
-  #       required: true
-  #       type: string
-  #   secrets:
-  #     jira_auth_token:
-  #       required: true
-  push:
-  workflow_dispatch:
+  workflow_call:
+    inputs:
+      jira_version_prefix:
+        required: true
+        type: string
+    secrets:
+      jira_auth_token:
+        required: true
 jobs:
   build:
     runs-on: ubuntu-latest
