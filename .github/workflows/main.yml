@@ -2,6 +2,7 @@ name: 테스트
 on:
   pull_request:
     types: [ opened, synchronize, edited ]
+concurrency: test-${{ github.ref }}
 jobs:
   build:
     runs-on: ubuntu-latest
