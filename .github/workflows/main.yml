@@ -1,7 +1,6 @@
 name: 테스트
 on:
   issue_comment:
-    types: [ created ]
 
 jobs:
   build:
