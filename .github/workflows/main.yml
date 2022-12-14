@@ -1,8 +1,7 @@
 name: 테스트
 on:
   issue_comment:
-    type: [ created ]
-
+    types: [ created, edited ]
 jobs:
   build:
 #     if: ${{ contains(github.event.comment.body, 'build test') }}
