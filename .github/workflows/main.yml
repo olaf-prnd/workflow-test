@@ -1,14 +1,17 @@
-name: Jira Release
+name: 코멘트 테스트
 on:
-  push:
-  pull_request:
-    types: [ opened, synchronize ]
+  issue_comment:
+    types: [ created ]
 jobs:
-  build:
+  build-app:
+    if: ${{ contains(github.event.comment.body, '@tester-prnd build') }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v3
+      - uses: xt0rted/pull-request-comment-branch@v1
+        id: comment-branch
+      - uses: actions/checkout@v2
+        if: success()
         with:
-          script: |
-            core.setFailed('Failure test')
-
+          ref: ${{ steps.comment-branch.outputs.head_ref }}
+      - run: git rev-parse --abbrev-ref HEAD
+      - run: git rev-parse --verify HEAD
