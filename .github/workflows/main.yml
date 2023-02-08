@@ -15,3 +15,4 @@ jobs:
           ref: ${{ steps.comment-branch.outputs.head_ref }}
       - run: git rev-parse --abbrev-ref HEAD
       - run: git rev-parse --verify HEAD
+
