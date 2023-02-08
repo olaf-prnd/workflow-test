@@ -1,7 +1,7 @@
 name: 코멘트 테스트
 on:
-  issue_comment:
-    types: [ created ]
+  pull_request:
+    types: [ opened, synchronize ]
   workflow_dispatch:
 jobs:
   build-app:
