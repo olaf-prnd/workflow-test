@@ -1,7 +1,7 @@
 name: 코멘트 테스트
 on:
   pull_request:
-    types: [ opened, synchronize ]
+    types: [ opened, synchronize, edited ]
   workflow_dispatch:
 jobs:
   build:
@@ -9,4 +9,3 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
