@@ -1,18 +1,12 @@
-name: 코멘트 테스트
+name: Release PR develop merge
+
 on:
   pull_request:
-    types: [ opened, synchronize ]
-  workflow_dispatch:
+    types:
+      - closed
+    branches:
+      - main
+      
 jobs:
-  build-app:
-    if: ${{ contains(github.event.comment.body, '@tester-prnd build') }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: xt0rted/pull-request-comment-branch@v1
-        id: comment-branch
-      - uses: actions/checkout@v2
-        if: success()
-        with:
-          ref: ${{ steps.comment-branch.outputs.head_ref }}
-      - run: git rev-parse --abbrev-ref HEAD
-      - run: git rev-parse --verify HEAD
+  pr_develop_merge:
+    uses: PRNDcompany/prnd-android-workflows/.github/workflows/release_pr_develop_merge.yml@feature/HDA-6873-release-pr-develop-merge
