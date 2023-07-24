@@ -14,5 +14,5 @@ jobs:
         id: foo    
         run: |
           VERSION=$(echo 'Merge pull request #5632 from PRNDcompany/release/6.17.0  Release 6.17.0' | egrep -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}')
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
       - run: echo "version is ${{ steps.foo.outputs.version }}"
