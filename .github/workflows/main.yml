@@ -10,5 +10,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - run: echo "test_name=test_value" >> $GITHUB_OUTPUT
+      - run: echo "version=$(echo 'Merge pull request #5632 from PRNDcompany/release/6.17.0  Release 6.17.0' | egrep -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}')" >> $GITHUB_OUTPUT
+        id: foo
+      - run: echo "version: ${{ steps.foo.outputs.version }}"
