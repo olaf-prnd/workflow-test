@@ -1,0 +1,9 @@
+name: issue_comment 테스트 (develop)
+on:
+  issue_comment:
+    types: [ created, edited ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo develop
