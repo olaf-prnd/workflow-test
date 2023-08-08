@@ -9,4 +9,6 @@ on:
 
 jobs:
   pr_develop_merge:
-    uses: PRNDcompany/prnd-android-workflows/.github/workflows/release_pr_develop_merge.yml@main
+    uses: PRNDcompany/prnd-android-workflows/.github/workflows/release_pr_develop_merge.yml@release_pr_develop_merge
+    secrets: 
+      PERSONAL_ACCESS_TOKEN: ${{ secrets.TESTER_PRND_ACCESS_TOKEN }}
