@@ -1,9 +1,12 @@
-name: 테스트
+name: Release PR develop merge
+
 on:
   pull_request:
-    types: [ opened, synchronize, edited, ready_for_review ]
+    types:
+      - closed
+    branches:
+      - main
+
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
+  pr_develop_merge:
+    uses: PRNDcompany/prnd-android-workflows/.github/workflows/release_pr_develop_merge.yml@main
