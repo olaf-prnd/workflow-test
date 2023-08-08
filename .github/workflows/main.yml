@@ -16,4 +16,5 @@ jobs:
     runs-on: ubuntu-latest
     needs: check-skip
     steps:
+      - uses: actions/checkout@v3
       - run: echo "Build Success"
