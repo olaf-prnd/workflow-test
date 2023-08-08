@@ -8,10 +8,6 @@ on:
       - main
 
 jobs:
-  echo_repository:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo ${{ github.repository }}
   pr_develop_merge:
     uses: PRNDcompany/prnd-android-workflows/.github/workflows/release_pr_develop_merge.yml@feature/HDA-9367-develop-pr-auto-merge-workflow-fix
     secrets: 
