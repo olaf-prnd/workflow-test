@@ -1,9 +1,9 @@
 name: Release PR develop merge
 
 on:
-  pull_request:
-    types: [ opened, synchronize, ready_for_review ]
-
+  push:
+    branches:
+      - olaf-prnd-patch-2
 jobs:
   build:
     runs-on: ubuntu-latest
