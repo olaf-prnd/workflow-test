@@ -2,14 +2,36 @@ name: 단위 테스트 / 앱 빌드
 on:
   issue_comment:
     types: [ created ]
+# jobs:
+#   build-app:
+#     runs-on: ubuntu-latest
+#     if: ${{ contains(github.event.comment.body, '@tester-prnd build') }}
+#     steps:
+#       - uses: octokit/request-action@v2.0.0
+#         with:
+#           route: ${{ github.event.issue.pull_request.url }}
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       - run: echo "PR URL is ${{ github.event.issue.pull_request.url }}"
+
 jobs:
-  build-app:
+  create-file:
     runs-on: ubuntu-latest
-    if: ${{ contains(github.event.comment.body, '@tester-prnd build') }}
     steps:
+      # Create check run
       - uses: octokit/request-action@v2.0.0
+        id: create_check_run
         with:
-          route: ${{ github.event.issue.pull_request.url }}
+          route: POST /repos/{owner}/{repo}/check-runs
+          owner: olaf-prnd
+          repo: workflow-test
+          name: "Test check run"
+          head_sha: ${{ github.sha }}
+          output: | # The | is significant!
+            title: Test check run title
+            summary: A summary of the test check run
+            images:
+              - alt: Test image
+                image_url: https://octodex.github.com/images/jetpacktocat.png
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: echo "PR URL is ${{ github.event.issue.pull_request.url }}"
