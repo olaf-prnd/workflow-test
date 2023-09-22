@@ -1,0 +1,13 @@
+name: 단위 테스트 / 앱 빌드
+on:
+  issue_comment:
+    types: [ created ]
+jobs:
+  build-app:
+    runs-on: ubuntu-latest
+    if: ${{ contains(github.event.comment.body, '@tester-prnd build') }}
+    steps:
+      - uses: octokit/request-action@v2.0.0
+        with:
+          route: ${{ github.event.issue.pull_request.url }}
+      - run: echo "PR URL is ${{ github.event.issue.pull_request.url }}"
