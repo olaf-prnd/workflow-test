@@ -1,1 +1,3 @@
 addAssignees: author
+skipUsers:
+  - olaf-prnd
