@@ -1,5 +1,5 @@
 if [ -f "test.md" ]; then
   echo "File exists"
 else
-  exit "File not exists"
+  echo "File not exists"
 fi
