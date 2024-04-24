@@ -14,6 +14,7 @@ jobs:
         with:
           ref: develop
       - name: release branch 생성
+        id: create_branch
         run: |
           DATE=$(date +"%y.%m.%d")
           BRANCH_NAME="release/$DATE"
