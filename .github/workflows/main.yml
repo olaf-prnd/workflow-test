@@ -7,7 +7,7 @@ on:
 jobs:
   create_release_branch:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true & contains(github.event.pull_request.labels.*.name, 'Release branch')
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -19,8 +19,8 @@ jobs:
           BRANCH_NAME="release/$DATE"
           COUNT=1
           while git ls-remote --exit-code --heads origin $BRANCH_NAME &>/dev/null; do
-            BRANCH_NAME="release/$DATE.$COUNT"
             COUNT=$((COUNT+1))
+            BRANCH_NAME="release/$DATE.$COUNT"
           done
           git checkout -b $BRANCH_NAME
           git push origin $BRANCH_NAME
