@@ -32,7 +32,7 @@ jobs:
           script: |
             const issue_number = context.issue.number;
             const branch_name = "${{ steps.create_branch.outputs.branch_name }}";
-            const message = `release branch 생성 완료 📁 🚙 🚗\n\n\`\`\`${branch_name}\`\`\``;
+            const message = `release branch 생성 완료 📁 🚙 🚗\n\n\`\`\`\n${branch_name}\n\`\`\``;
             github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
