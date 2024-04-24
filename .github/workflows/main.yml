@@ -9,31 +9,18 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
           ref: develop
       - name: Create new branch
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const repo = context.repo;
-            const date = new Date();
-            const formattedDate = `${date.getFullYear().toString().substr(-2)}.${("0" + (date.getMonth() + 1)).slice(-2)}.${("0" + date.getDate()).slice(-2)}`;
-            let branchName = 'release/' + formattedDate;
-            let count = 1;
-            while (await branchExists(github, repo, branchName)) {
-              branchName = 'release/' + formattedDate + '.' + (++count);
-            }
-            const { data: ref } = await github.git.getRef({ ...repo, ref: 'heads/develop' });
-            await github.git.createRef({ ...repo, ref: 'refs/heads/' + branchName, sha: ref.object.sha });
-            console.log('Branch created: ' + branchName);
-
-            async function branchExists(github, repo, branchName) {
-              try {
-                await github.git.getRef({ ...repo, ref: 'heads/' + branchName });
-                return true;
-              } catch (error) {
-                return false;
-              }
-            }
+        run: |
+          DATE=$(date +"%y.%m.%d")
+          BRANCH_NAME="release/$DATE"
+          COUNT=1
+          while git ls-remote --exit-code --heads origin $BRANCH_NAME &>/dev/null; do
+            BRANCH_NAME="release/$DATE.$COUNT"
+            COUNT=$((COUNT+1))
+          done
+          git checkout -b $BRANCH_NAME
+          git push origin $BRANCH_NAME
