@@ -1,41 +1,33 @@
-name: release branch 생성
-
+name: Release PR 생성
 on:
-  pull_request:
-    types: [ closed ]
-
+  workflow_dispatch:
+    inputs:
+      jira_version_prefix:
+        required: true
+        type: string
+      main_branch_name:
+        type: string
+        default: "main"
 jobs:
-  create_release_branch:
+  pull-request:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'Release branch')
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Release PR 생성 (main)
+        id: create_pr
+        uses: repo-sync/pull-request@v2
         with:
-          ref: develop
-      - name: release branch 생성
-        id: create_branch
-        run: |
-          DATE=$(date +"%y.%m.%d")
-          BRANCH_NAME="release/$DATE"
-          COUNT=1
-          while git ls-remote --exit-code --heads origin $BRANCH_NAME &>/dev/null; do
-            COUNT=$((COUNT+1))
-            BRANCH_NAME="release/$DATE.$COUNT"
-          done
-          git checkout -b $BRANCH_NAME
-          git push origin $BRANCH_NAME
-          echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
-      - name: PR에 Comment를 추가하여 알림
-        uses: actions/github-script@v7
+          destination_branch: ${{ inputs.main_branch_name }}
+          github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          pr_assignee: ${{ github.event.head_commit.author.name }}
+          pr_title: "dummy title (main)"
+          pr_body: "dummy body"
+          pr_draft: ${{ inputs.main_branch_name == 'hotfix' }}
+      - name: Release PR 생성 (develop)
+        uses: repo-sync/pull-request@v2
         with:
-          script: |
-            const issue_number = context.issue.number;
-            const branch_name = "${{ steps.create_branch.outputs.branch_name }}";
-            const message = `release branch 생성 완료 📁 🚙 🚗\n\n\`\`\`\n${branch_name}\n\`\`\``;
-            github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: issue_number,
-              body: message
-            });
+          destination_branch: "develop"
+          github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          pr_assignee: ${{ github.event.head_commit.author.name }}
+          pr_title: "dummy title (develop)"
+          pr_body: "${{steps.create_pr.outputs.pr_url}}"
+          pr_draft: ${{ inputs.main_branch_name == 'hotfix' }}
