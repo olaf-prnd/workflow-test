@@ -2,9 +2,6 @@ name: Release PR 생성
 on:
   workflow_dispatch:
     inputs:
-      jira_version_prefix:
-        required: true
-        type: string
       main_branch_name:
         type: string
         default: "main"
