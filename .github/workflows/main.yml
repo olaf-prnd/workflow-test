@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: variable 체크
-        if: ${{ vars.STAGED_ROLLOUT_ENABLED == 'true' }}
+        if: ${{ fromJSON(vars.IS_ENABLED) }}
         run: echo ${{ vars.IS_ENABLED }}
       - name: workflow 종료
         run: ls
