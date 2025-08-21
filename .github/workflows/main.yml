@@ -9,8 +9,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: variable 체크
+      - name: IS_ENABLED == true
         if: ${{ fromJSON(vars.IS_ENABLED) }}
-        run: echo ${{ vars.IS_ENABLED }}
+        run: echo "IS_ENABLED가 true일 때 실행"
+      - name: IS_ENABLED == false
+        if: ${{ !fromJSON(vars.IS_ENABLED) }}
+        run: echo "IS_ENABLED가 false일 때 실행"
       - name: workflow 종료
         run: ls
